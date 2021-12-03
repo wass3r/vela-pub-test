@@ -1,9 +1,9 @@
 version: "1"
 steps:
-  - name: test
-    image: alpine:latest
-    commands:
-      - echo "hello"
+ - name: test
+   image: alpine:latest
+   commands:
+     - echo "hello"
       
  - name: fake log
    image: golang:latest
