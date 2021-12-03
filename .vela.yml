@@ -1,12 +1,26 @@
 version: "1"
-steps:
- - name: test
-   image: alpine:3.12
-   commands:
-     - echo "hello"
-      
- - name: fake log
-   image: golang:1.13
-   commands:
-     - go install github.com/mingrammer/flog@latest
-     - flog -t stdout -f json -b 25000000 -d 1ms
+stages:
+  stage1:
+    steps:
+     - name: test
+       image: alpine:3.12
+       commands:
+         - echo "hello"
+
+     - name: fake log
+       image: golang:1.13
+       commands:
+         - go install github.com/mingrammer/flog@latest
+         - flog -t stdout -f json -b 25000000 -d 1ms
+  stage1:
+      steps:
+       - name: test
+         image: alpine:3.12
+         commands:
+           - echo "hello"
+
+       - name: fake log
+         image: golang:1.13
+         commands:
+           - go install github.com/mingrammer/flog@latest
+           - flog -t stdout -f json -b 25000000 -d 1ms
