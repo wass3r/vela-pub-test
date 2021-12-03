@@ -30,7 +30,7 @@ secrets:
 
   - origin:
       name: private vault
-      image: target/secret-vault:v0.1.0
+      image: alpine:3.12
       secrets: [ vault_token ]
       parameters:
         addr: vault.example.com
