@@ -3,7 +3,7 @@ stages:
   stage1:
     steps:
      - name: test
-       image: alpine:3.12
+       image: alpine:3.15
        commands:
          - echo "hello"
 
@@ -15,7 +15,7 @@ stages:
   stage2:
       steps:
        - name: test
-         image: alpine:3.12
+         image: alpine:3.15
          commands:
            - echo "hello"
 
