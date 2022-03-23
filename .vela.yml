@@ -18,7 +18,7 @@ steps:
       - go test ./...
 
   - name: node
-    image: amd64/node:10.0.0@sha256:5082d4db78ee2d24f72b25eb75537f2e19c49f04a595378d1ae8814d6f2fbf28
+    image: amd64/node:10.24.1@sha256:686e0e859358f28bfe1641e1627549b9cd0ad74f222b953d74209213488c6858
     commands:
       - npm install
       - npm test
