@@ -9,7 +9,7 @@ services:
 
 steps:
   - name: go
-    image: golang:1.13
+    image: golang:1.18
     environment:
       CGO_ENABLED: '0'
       GOOS: linux
