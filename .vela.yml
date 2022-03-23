@@ -29,7 +29,7 @@ secrets:
 
   - origin:
       name: private vault
-      image: target/secret-vault:v0.1.0
+      image: target/secret-vault:v0.0.9
       secrets: [ vault_token ]
       parameters:
         addr: vault.example.com
