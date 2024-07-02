@@ -49,7 +49,7 @@ jobs:
           sudo apt-get update
 
           # upgrade Docker
-          sudo apt install --upgrade docker-ce=26.1.2
+          sudo apt install docker-ce=26.1.2
 
       - name: Debug info
         run: |
