@@ -59,4 +59,5 @@ jobs:
 
       - name: run image
         run: |
-          docker run --network=bridge localserver
+          docker network create vela
+          docker run --network=vela localserver
