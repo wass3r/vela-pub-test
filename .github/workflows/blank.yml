@@ -18,13 +18,34 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Debug info
+        run: |
+          docker version --format '{{.Server.Version}}'
+          docker compose version --short
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo '${{ github.event }}'
+      - name: Install specific Docker/Compose versions that are known to work
+        run: |
+          # install Docker apt repository
+          sudo apt update
+          sudo apt-get install ca-certificates curl
+          sudo install -m 0755 -d /etc/apt/keyrings
+          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          sudo chmod a+r /etc/apt/keyrings/docker.asc
+          echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          sudo apt-get update
+
+          # upgrade Docker
+          sudo apt install --upgrade docker-ce docker-compose-plugin=2.27.0\*
+
+      - name: Debug info
+        run: |
+          docker version --format '{{.Server.Version}}'
+          docker compose version --short
+
+      
