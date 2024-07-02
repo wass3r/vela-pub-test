@@ -48,6 +48,8 @@ jobs:
             sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
           sudo apt-get update
           sudo apt list --installed | grep docker
+          sudo apt-cache policy docker-ce
+          sudo apt-cache policy docker-engine
 
           # upgrade Docker
           sudo apt install docker-ce-cli=26.1.2-1~ubuntu.22.04~jammy
