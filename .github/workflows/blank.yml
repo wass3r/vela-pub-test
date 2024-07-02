@@ -50,7 +50,7 @@ jobs:
           sudo apt list --installed | grep docker
 
           # upgrade Docker
-          sudo apt install docker-ce-cli=26.1.2
+          sudo apt install docker-ce-cli=26.1.2-1~ubuntu.22.04~jammy
 
       - name: Debug info
         run: |
