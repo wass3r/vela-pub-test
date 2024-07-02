@@ -59,4 +59,4 @@ jobs:
 
       - name: run image
         run: |
-          docker run localserver
+          docker run --network=bridge localserver
