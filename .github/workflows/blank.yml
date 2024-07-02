@@ -25,7 +25,7 @@ jobs:
 
       - name: build image
         run: |
-          docker buildx build -t localserver .
+          docker buildx build -t localserver -f Dockerfile .
 
       - name: Debug info
         run: |
