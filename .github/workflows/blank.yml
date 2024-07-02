@@ -51,6 +51,7 @@ jobs:
           # upgrade Docker
           sudo apt install --allow-downgrades docker-ce-cli=5:26.1.2-1~ubuntu.22.04~jammy
           sudo apt install --allow-downgrades docker-ce=5:26.1.2-1~ubuntu.22.04~jammy
+          cat /etc/resolv.conf
 
       - name: Debug info
         run: |
