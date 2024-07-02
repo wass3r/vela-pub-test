@@ -50,7 +50,7 @@ jobs:
           sudo apt list --installed | grep docker
 
           # upgrade Docker
-          sudo apt install docker=26.1.2
+          sudo apt install docker-cli=26.1.2
 
       - name: Debug info
         run: |
