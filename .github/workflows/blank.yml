@@ -47,6 +47,8 @@ jobs:
             $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
             sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
           sudo apt-get update
+          sudo apt list installed
+          sudo apt list -a docker-ce
 
           # upgrade Docker
           sudo apt install docker-ce=26.1.2
