@@ -34,6 +34,11 @@ jobs:
         run: |
           docker buildx build -t localserver --build-arg="node_ver=16" --load .
 
+      - name: run image before
+        run: |
+          docker network create vela
+          docker run --network=vela localserver
+
       - name: other info
         run: |
           cat /etc/hosts
@@ -63,6 +68,11 @@ jobs:
       - name: build image
         run: |
           docker buildx build -t localserver --build-arg="node_ver=18" --load .
+
+      - name: run image before
+        run: |
+          docker network create vela
+          docker run --network=vela localserver
 
       - name: other info
         run: |
@@ -94,6 +104,11 @@ jobs:
         run: |
           docker buildx build -t localserver --build-arg="node_ver=20" --load .
 
+      - name: run image before
+        run: |
+          docker network create vela
+          docker run --network=vela localserver
+
       - name: other info
         run: |
           cat /etc/hosts
@@ -123,6 +138,11 @@ jobs:
       - name: build image
         run: |
           docker buildx build -t localserver --build-arg="node_ver=22" --load .
+
+      - name: run image after
+        run: |
+          docker network create vela
+          docker run --network=vela localserver
 
       - name: other info
         run: |
