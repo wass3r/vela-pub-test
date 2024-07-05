@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test:
+  node18:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
@@ -25,46 +25,75 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Debug info
+        run: |
+          docker version --format '{{.Server.Version}}'
+          docker compose version --short
+
       - name: build image
         run: |
-          docker buildx build -t localserver --load .
+          docker buildx build -t localserver --build-arg="node_ver=18" --load .
+
+      - name: other info
+        run: |
+          cat /etc/hosts
+          cat /etc/gai.conf
+
+      - name: run image
+        run: |
+          docker network create vela
+          docker run --network=vela localserver
+  node20:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Debug info
         run: |
           docker version --format '{{.Server.Version}}'
           docker compose version --short
 
-      - name: Install specific Docker/Compose versions that are known to work
+      - name: build image
         run: |
-          # install Docker apt repository
-          sudo apt update
-          sudo apt-get install ca-certificates curl
-          sudo install -m 0755 -d /etc/apt/keyrings
-          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-          sudo chmod a+r /etc/apt/keyrings/docker.asc
-          echo \
-            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-          sudo apt-get update
+          docker buildx build -t localserver --build-arg="node_ver=20" --load .
 
-          # upgrade Docker
-          sudo apt install --allow-downgrades docker-ce-cli=5:26.1.2-1~ubuntu.22.04~jammy
-          sudo apt install --allow-downgrades docker-ce=5:26.1.2-1~ubuntu.22.04~jammy
-          echo "-----------"
+      - name: other info
+        run: |
           cat /etc/hosts
-          echo "-----------"
-          sudo truncate -s0 /etc/hosts
-          cat /etc/hosts
-          echo "-----------"
-          cat /etc/resolv.conf
-          echo "-----------"
-          sysctl -a
+          cat /etc/gai.conf
+
+      - name: run image
+        run: |
+          docker network create vela
+          docker run --network=vela localserver
+  node22:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Debug info
         run: |
           docker version --format '{{.Server.Version}}'
           docker compose version --short
+
+      - name: build image
+        run: |
+          docker buildx build -t localserver --build-arg="node_ver=22" --load .
+
+      - name: other info
+        run: |
+          cat /etc/hosts
+          cat /etc/gai.conf
 
       - name: run image
         run: |
