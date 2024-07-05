@@ -38,7 +38,7 @@ jobs:
         run: |
           cat /etc/hosts
           cat /etc/gai.conf
-          sudo echo "precedence ::ffff:0:0/96  100" > /etc/gai.conf
+          sudo echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
 
       - name: run image
         run: |
@@ -67,7 +67,7 @@ jobs:
         run: |
           cat /etc/hosts
           cat /etc/gai.conf
-          sudo echo "precedence ::ffff:0:0/96  100" > /etc/gai.conf
+          sudo echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
 
       - name: run image
         run: |
@@ -96,7 +96,7 @@ jobs:
         run: |
           cat /etc/hosts
           cat /etc/gai.conf
-          sudo echo "precedence ::ffff:0:0/96  100" > /etc/gai.conf
+          sudo echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
 
       - name: run image
         run: |
