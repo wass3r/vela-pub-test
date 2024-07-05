@@ -47,7 +47,6 @@ jobs:
 
       - name: run image
         run: |
-          docker network create vela
           docker run --network=vela localserver
 
   node18:
@@ -82,7 +81,6 @@ jobs:
 
       - name: run image
         run: |
-          docker network create vela
           docker run --network=vela localserver
 
   node20:
@@ -117,7 +115,6 @@ jobs:
 
       - name: run image
         run: |
-          docker network create vela
           docker run --network=vela localserver
 
   node22:
@@ -152,5 +149,4 @@ jobs:
 
       - name: run image
         run: |
-          docker network create vela
           docker run --network=vela localserver
