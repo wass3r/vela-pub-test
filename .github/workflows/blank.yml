@@ -15,142 +15,28 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  node16:
+  go:
     # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+    runs-on: latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: clone
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: install go
+        uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5.0.1
+        with:
+          # use version from go.mod file
+          go-version-file: "go.mod"
+          cache: true
+          check-latest: true
 
-      - name: Debug info
+      - name: tags
         run: |
-          docker version --format '{{.Server.Version}}'
-          docker compose version --short
+          git fetch --tags
 
-      - name: build image
+      - name: create spec
         run: |
-          docker buildx build -t localserver --build-arg="node_ver=16" --load .
-
-      - name: run image before
-        run: |
-          docker network create vela
-          docker run --network=vela localserver
-
-      - name: other info
-        run: |
-          cat /etc/hosts
-          cat /etc/gai.conf
-          sudo echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
-          sysctl -n net.ipv6.bindv6only
-          sysctl -n net.ipv4.ip_forward
-
-      - name: run image
-        run: |
-          docker run --network=vela localserver
-
-  node18:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Debug info
-        run: |
-          docker version --format '{{.Server.Version}}'
-          docker compose version --short
-
-      - name: build image
-        run: |
-          docker buildx build -t localserver --build-arg="node_ver=18" --load .
-
-      - name: run image before
-        run: |
-          docker network create vela
-          docker run --network=vela localserver
-
-      - name: other info
-        run: |
-          cat /etc/hosts
-          cat /etc/gai.conf
-          sudo echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
-          sudo systemctl restart docker
-          cat /etc/gai.conf
-
-      - name: run image
-        run: |
-          docker run --network=vela localserver
-
-  node20:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Debug info
-        run: |
-          docker version --format '{{.Server.Version}}'
-          docker compose version --short
-
-      - name: build image
-        run: |
-          docker buildx build -t localserver --build-arg="node_ver=20" --load .
-
-      - name: run image before
-        run: |
-          docker network create vela
-          docker run --network=vela localserver
-
-      - name: other info
-        run: |
-          cat /etc/hosts
-          cat /etc/gai.conf
-          sudo echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
-
-      - name: run image
-        run: |
-          docker run --network=vela localserver
-
-  node22:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Debug info
-        run: |
-          docker version --format '{{.Server.Version}}'
-          docker compose version --short
-
-      - name: build image
-        run: |
-          docker buildx build -t localserver --build-arg="node_ver=22" --load .
-
-      - name: run image after
-        run: |
-          docker network create vela
-          docker run --network=vela localserver
-
-      - name: other info
-        run: |
-          cat /etc/hosts
-          cat /etc/gai.conf
-          sudo echo "precedence ::ffff:0:0/96  100" | sudo tee -a /etc/gai.conf
-
-      - name: run image
-        run: |
-          docker run --network=vela localserver
+          go install github.com/go-swagger/go-swagger/cmd/swagger@latest
+          swagger --help
+          
