@@ -2,7 +2,7 @@ version: "1"
 
 services:
   - name: mysql
-    image: mysql:5.7.24
+    image: mysql:8.0.28
 
   - name: redis
     image: redis:alpine
